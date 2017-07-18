@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.users.UserDao">
+	
+	<!-- MyBatis 根据SQL结果集的列名注入到
+	User 对象对应的Bean属性 -->
+	<select id="findAll" resultType="cn.jhd.ec.entity.users.User">
+		SELECT * FROM ecs_users
+	</select>
+	
+	<!-- 
+	INSERT INTO `ecs_users` (`user_id`, `email`, `user_name`, `password`, `alias`,
+	 `msn`, `qq`, `office_phone`, `home_phone`, `mobile_phone`, `credit_line`) 
+	 VALUES ('7', 'saa@qq.com', 'waa', 'asdsad', 'bn', 'asa', '121', '321', '21421',
+	  '3213', '0')
+	 -->
+	<insert	id="save" parameterType="cn.jhd.ec.entity.users.User">
+	INSERT INTO ecs_users 
+	(email, user_name, password, alias, msn, qq, office_phone,
+	 home_phone, mobile_phone, credit_line) 
+	VALUES 
+	(#{email}, #{user_name}, #{password}, #{alias}, #{msn}, #{qq}, 
+	#{office_phone}, #{home_phone}, #{mobile_phone}, #{credit_line})
+	</insert>
+	
+	
+	<update id="edit" parameterType="cn.jhd.ec.entity.users.User">
+		UPDATE `ecs_users`
+		<set>
+			<if test="email!=null">
+				`email`=#{email},
+			</if>
+			<if test=" password!=null">
+				password= #{password},
+			</if>
+			<if test=" msn!=null">
+				msn=#{msn},
+			</if>
+			<if test=" qq!=null">
+				`qq`=#{qq},
+			</if>
+			<if test=" office_phone!=null">
+				`office_phone`=#{office_phone},
+			</if>	
+			<if test="home_phone !=null">
+				`home_phone`=#{home_phone},
+			</if>
+			<if test=" mobile_phone!=null">
+				`mobile_phone`= #{mobile_phone},
+			</if>
+	
+			<if test=" passwd_question!=null">
+				`passwd_question`=#{passwd_question},
+			</if>
+			<if test="passwd_answer !=null">
+				`passwd_answer`=#{passwd_answer},
+			</if>
+			<if test="last_login!=null">
+				last_login=#{last_login}
+			</if>
+		</set>
+		WHERE `user_id`=#{user_id}
+	</update>
+	 
+	 <select id="findByUserName" parameterType="string" resultType="cn.jhd.ec.entity.users.User">
+	 	SELECT * FROM `ecs_users` WHERE `user_name` = #{userName}
+	 </select>
+	 
+	 <!-- 关联查询 如果column对应property值一样，则不需要写额外的column-->
+	 
+	 <resultMap type="cn.jhd.ec.entity.users.User"  id="postResultMap">
+		<id column="user_id"/>
+		<result column="email"/>
+		<result column="user_name"/>
+		<result column="password"/>
+		<result column="reg_time"/>
+		<result column="last_login"/>
+		<result column="last_ip"/>
+		<result column="visit_count"/>
+		<result column="msn"/>
+		<result column="qq"/>
+		<result column="office_phone"/>
+		<result column="home_phone"/>
+		<result column="mobile_phone"/>
+		<result column="passwd_question"/>
+		<result column="passwd_answer"/>
+		<result column="credit_line"/>
+		<result column="alias"/>
+		<result column="birthday"/>
+		<result column="sex"/>
+		<collection property="userAddres" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.users.UserAddress"
+			select="selectUserAddress"
+			column="user_id">
+		</collection>
+		<collection property="orders" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.order.OrderInfo"
+			select="selectOrderInfo"
+			column="user_id">
+		</collection>
+	</resultMap>
+	<select id="selectOrderInfo" resultType="cn.jhd.ec.entity.order.OrderInfo">
+		SELECT * FROM ecs_order_info where user_id=#{user_id}
+	</select>
+	<select id="selectUserAddress" resultType="cn.jhd.ec.entity.users.UserAddress">
+		SELECT * FROM ecs_user_address where user_id=#{user_id}
+	</select>
+	<select id="findByUserId" parameterType="int" resultMap="postResultMap">
+		select 
+			*
+		from 
+			ecs_users
+		where 
+			user_id = #{userId}	
+	</select>
+	
+	<!-- 关联查询结束 -->
+</mapper>
+
+
+
+
+
+
+

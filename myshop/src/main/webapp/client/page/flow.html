@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta name="Generator" content="ECSHOP v2.7.1">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--<meta name="Keywords" content="">-->
+    <!--<meta name="Description" content="">-->
+
+    <title>购物流程_ECSHOP演示站 - Powered by ECShop</title>
+
+    <!--<link rel="shortcut icon" href="favicon.ico">-->
+    <!--<link rel="icon" href="animated_favicon.gif" type="image/gif">-->
+    <link href="../themes/default/style.css" rel="stylesheet" type="text/css">
+
+    <!--<script type="text/javascript" src="../js/common.js"></script>-->
+    <script type="text/javascript" src="../js/shopping_flow.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/baseValue.js"></script>
+    <script type="text/javascript" src="../js/cookie.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //1.加载购物车列表
+            $.ajax({
+                url:path+"shoppingCart/find.do",
+                type:"get",
+                success:function(result){
+                    if(result.state==0){
+                        var goods = result.data;
+                        for(var i=0;i<goods.length;i++){
+
+                            var tr=''+
+                                    '<tr>'+
+                                    '<td bgcolor="#ffffff" align="center">'+
+                                    '  <a href="goods.html?id='+goods[i].goods_id+'" target="_blank"><img src='+"../"+goods[i].goods_thumb+' border="0" title='+goods[i].goods_name+'></a><br>'+
+                                    '   <a href="goods.html?id='+goods[i].goods_id+'" target="_blank" class="f6">'+goods[i].goods_name+'</a>'+
+                                    '</td>'+
+                                    '<td bgcolor="#ffffff"></td>'+
+                                    '<td align="right" bgcolor="#ffffff">￥'+goods[i].market_price+'元</td>'+
+                                    '<td align="right" bgcolor="#ffffff">￥'+goods[i].shop_price+'元</td>'+
+                                    '<td align="right" bgcolor="#ffffff">'+
+                                    '<input type="text" name="goods_number[68]" id="goods_number_68" value='+goods[i].num+' size="4" class="inputBg" style="text-align:center " onkeydown="showdiv(this)">'+
+                                    '</td>'+
+                                    '<td align="right" bgcolor="#ffffff">￥'+goods[i].goods_amount+'元</td>'+
+                                    '<td align="center" bgcolor="#ffffff">'+
+                                    '<a href="#" onclick="delbyid('+goods[i].goods_id+')" class="f6">删除</a>'+
+                                    '</td>'+
+                                    '</tr>';
+                            $("#simplegoodsInfo").append(tr);
+                        }
+                    }
+                }
+
+            });
+
+        });
+        //2.删除对应的购物车列表
+        function delbyid(id){
+            if (confirm('您确实要把该商品移出购物车吗？')){
+                $.ajax({
+                    url:path+"shoppingCart/del.do",
+                    type:"get",
+                    data:{goods_id:id},
+                    dataType:"json",
+                    success:function(result){
+                        if(result.state==0){
+                            $(this).parent().parent().remove();
+                        }
+                    }
+                });
+            };
+            return;
+        }
+        //3.结算中心
+        function toSettlement(){
+            //1.单击结算中心，判断用户是否登陆
+            var userName=getCookie("userName");
+            console.log(userName);
+            var arr=$("#simplegoodsInfo").children();
+            if(userName){
+                //1.1用户已登陆，跳转到订单页面
+                window.location.href=path+"page/flow_step_checkout.html";
+                return;
+            }
+            //1.2用户未登陆，进入用户登陆/注册页面-->业务逻辑转移
+            window.location.href=path+"page/login_regi.html";
+        }
+    </script>
+</head>
+<body style="padding-top: 0;margin-top: 0">
+<div class="flowBox">
+    <h6><span>商品列表</span></h6>
+    <form id="formCart" name="formCart" method="post" action="flow.php">
+        <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+            <tbody id="simplegoodsInfo">
+            <tr>
+                <th bgcolor="#ffffff">商品名称</th>
+                <th bgcolor="#ffffff">属性</th>
+                <th bgcolor="#ffffff">市场价</th>
+                <th bgcolor="#ffffff">本店价</th>
+                <th bgcolor="#ffffff">购买数量</th>
+                <th bgcolor="#ffffff">小计</th>
+                <th bgcolor="#ffffff">操作</th>
+            </tr>
+            <tr>
+                <td bgcolor="#ffffff" align="center">
+                    <a href="goods.php?id=5" target="_blank"><img src="../images/200905/thumb_img/5_thumb_G_1241422518886.jpg" border="0" title="索爱原装M2卡读卡器"></a><br>
+                    <a href="goods.php?id=5" target="_blank" class="f6">索爱原装M2卡读卡器</a>
+                </td>
+                <td bgcolor="#ffffff"></td>
+                <td align="right" bgcolor="#ffffff">￥24.00元</td>
+                <td align="right" bgcolor="#ffffff">￥20.00元</td>
+                <td align="right" bgcolor="#ffffff">
+                    <input type="text" name="goods_number[68]" id="goods_number_68" value="2" size="4" class="inputBg" style="text-align:center " onkeydown="showdiv(this)">
+                </td>
+                <td align="right" bgcolor="#ffffff">￥40.00元</td>
+                <td align="center" bgcolor="#ffffff">
+                    <a href="#" onclick="delbyid(6)" class="f6">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+            <tbody><tr>
+                <td bgcolor="#ffffff">
+                    购物金额小计 ￥40.00元，比市场价 ￥48.00元 节省了 ￥8.00元 (17%)              </td>
+                <td align="right" bgcolor="#ffffff">
+                    <input type="button" value="清空购物车" class="bnt_blue_1" onclick="location.href='flow.php?step=clear'">
+                    <input name="submit" type="submit" class="bnt_blue_1" value="更新购物车">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" name="step" value="update_cart">
+    </form>
+    <table width="99%" align="center" border="0" cellpadding="5" cellspacing="0" bgcolor="#dddddd">
+        <tbody><tr>
+            <td bgcolor="#ffffff"><a href="./"><img src="../themes/default/images/continue.gif" alt="continue"></a></td>
+            <td bgcolor="#ffffff" align="right"><a href="#" onclick="toSettlement();"><img src="../themes/default/images/checkout.gif" alt="checkout"></a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

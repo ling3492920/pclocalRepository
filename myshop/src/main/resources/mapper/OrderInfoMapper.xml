@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.order.OrderInfoDao">
+
+	<select id="findByStatus" resultMap="resultOrderInfo" parameterType="int">
+		select * from ecs_order_info where order_status = #{order_status}
+	</select>
+<!-- 
+UPDATE `ecs_order_info` SET 
+`order_status`='1', `shipping_status`='1', `pay_status`='2', `consignee`='王小川',
+ `country`='2', `province`='5', `city`='119', `district`='5656', `address`='九亭翠亭别墅30号208',
+  `zipcode`='56564', `tel`='187121656', `mobile`='1872156989', `email`='5656@qq.com',
+   `best_time`='周末或656点后', `sign_building`='5656', `shipping_id`='4', `shipping_name`='顺风',
+    `pay_id`='1', `pay_name`='余额', `how_oos`='可单发', `goods_amount`='268', `shipping_fee`='0'
+     WHERE (`order_id`='21')
+     每个
+     <if> =#{},</if>
+     后面逗号不能丢，否则会报错，提示某某字段附件出错，error
+ -->
+	<update id="edit" parameterType="cn.jhd.ec.entity.order.OrderInfo">
+		UPDATE ecs_order_info
+		<set>
+			<if test="order_status!=null">
+				order_status=#{order_status},
+			</if>
+			<if test="shipping_status!=null">
+				shipping_status=#{shipping_status},
+			</if>
+			<if test="pay_status!=null">
+				pay_status=#{pay_status},
+			</if>
+			<if test="consignee!=null">
+				consignee=#{consignee},
+			</if>
+			<if test="country!=null">
+				country=#{country},
+			</if>
+			<if test="province!=null">
+				province=#{province},
+			</if>
+			<if test="city!=null">
+				city=#{city},
+			</if>
+			<if test="district!=null">
+				district=#{district},
+			</if>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+			<if test="zipcode!=null">
+				zipcode=#{zipcode},
+			</if>
+			<if test="tel!=null">
+				tel=#{tel},
+			</if>
+			<if test="mobile!=null">
+				mobile=#{mobile},
+			</if>
+			<if test="email!=null">
+				email=#{email},
+			</if>
+			<if test="best_time!=null">
+				best_time=#{best_time},
+			</if>
+			<if test="sign_building!=null">
+				sign_building=#{sign_building},
+			</if>
+			<if test="shipping_id!=null">
+				shipping_id=#{shipping_id},
+			</if>
+			<if test="shipping_name!=null">
+				shipping_name=#{shipping_name},
+			</if>
+			<if test="pay_id!=null">
+				pay_id=#{pay_id},
+			</if>
+			<if test="pay_name!=null">
+				pay_name=#{pay_name},
+			</if>
+			<if test="how_oos!=null">
+				how_oos=#{how_oos},
+			</if>
+			<if test="goods_amount!=null">
+				goods_amount=#{goods_amount},
+			</if>
+			<if test="shipping_fee!=null">
+				shipping_fee=#{shipping_fee}
+			</if>
+		</set>
+		WHERE order_id=#{order_id}
+	</update>
+	 <!-- 
+	 INSERT INTO `ecs_order_info` 
+	 (`order_sn`, `user_id`, `order_status`, `shipping_status`, `pay_status`, 
+	 `consignee`, `country`, `province`, `city`, `district`, `address`, `zipcode`, 
+	 `tel`, `mobile`, `email`, `best_time`, `sign_building`, `shipping_id`, `shipping_name`, 
+	 `pay_id`, `pay_name`, `how_oos`, `goods_amount`, `shipping_fee`, `insure_fee`, `pay_fee`, 
+	 `pack_fee`, `card_fee`, `money_paid`, `surplus`, `integral`, `integral_money`, `bonus`, 
+	 `order_amount`, `from_ad`, `referer`, `add_time`, `confirm_time`, `pay_time`, `shipping_time`, 
+	 `pack_id`, `card_id`, `bonus_id`, `invoice_no`, `extension_code`, `extension_id`, `agency_id`, 
+	 `inv_type`, `tax`, `is_separate`, `parent_id`, `discount`) 
+	 VALUES ('2018', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 
+	 '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 
+	 '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', ' ', '1', '1', '1', '1')
+	  -->
+	 <insert id="save" parameterType="cn.jhd.ec.entity.order.OrderInfo">
+	 	 INSERT INTO `ecs_order_info` 
+	 (`order_sn`, `user_id`, `order_status`, `shipping_status`, `pay_status`, 
+	 `consignee`, `country`, `province`, `city`, `district`, `address`, `zipcode`, 
+	 `tel`, `mobile`, `email`, `best_time`, `sign_building`, `shipping_id`, `shipping_name`, 
+	 `pay_id`, `pay_name`, `how_oos`, `goods_amount`, `shipping_fee`, `insure_fee`, `pay_fee`, 
+	 `pack_fee`, `card_fee`, `money_paid`, `surplus`, `integral`, `integral_money`, `bonus`, 
+	 `order_amount`, `from_ad`, `add_time`, `confirm_time`, `pay_time`, `shipping_time`, 
+	 `pack_id`, `card_id`, `bonus_id`, `invoice_no`, `extension_code`, `extension_id`, `agency_id`, 
+	 `inv_type`, `tax`, `is_separate`, `parent_id`, `discount`)
+	  VALUES 
+	  (#{order_sn},#{user_id},#{order_status},#{shipping_status},#{pay_status},
+	  #{consignee},#{country},#{province},#{city},#{district},#{address},#{zipcode},
+	  #{tel},#{mobile},#{email},#{best_time},#{sign_building},#{shipping_id},#{shipping_name},
+	  #{pay_id},#{pay_name},#{how_oos},#{goods_amount},#{shipping_fee},0,0,
+	  0,0,0,0,0,0,0,
+	  #{order_amount},0,#{add_time},0,1,1,
+	  0,0,0,"","",0,0,
+	  "",0,0,0,0)
+	 </insert>
+	 
+	 <delete id="delById" parameterType="int">
+	 	DELETE FROM `ecs_order_info` WHERE (`order_id`=#{id})
+	 </delete>
+	 
+	 <!-- 查询，并把关联商品查出 -->
+	 
+	 <resultMap type="cn.jhd.ec.entity.order.OrderInfo"  id="resultOrderInfo">
+		<id column="order_id" property="order_id"/>
+		<result column="order_sn" property="order_sn"/>
+		<result column="order_status" property="order_status"/>
+		<result column="pay_status" property="pay_status"/>
+		<result column="shipping_status" property="shipping_status"/>
+		<result column="goods_amount" property="goods_amount"/>
+		<result column="shipping_fee" property="shipping_fee"/>
+		<result column="order_amount" property="order_amount"/>
+		<result column="consignee" property="consignee"/>
+		<result column="address" property="address"/>
+		<result column="tel" property="tel"/>
+		<result column="sign_building" property="sign_building"/>
+		<result column="email" property="email"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="mobile" property="mobile"/>
+		<result column="best_time" property="best_time"/>
+		<result column="shipping_id" property="shipping_id"/>
+		<result column="shipping_name" property="shipping_name"/>
+		<result column="pay_id" property="pay_id"/>
+		<result column="pay_name" property="pay_name"/>
+		<result column="how_oos" property="how_oos"/>
+		<result column="add_time" property="add_time"/>
+		<result column="country" property="country"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		<result column="district" property="district"/>
+		<result column="user_id" property="user_id"/>
+		<collection property="ogs" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.relation.OrderGoods"
+			select="cn.jhd.ec.dao.relation.OrderGoodsDao.findByOrder_id"
+			column="order_id">
+		</collection>
+	</resultMap>
+	
+	 <select id="findById" parameterType="int" resultMap="resultOrderInfo">
+	 	select * from ecs_order_info where order_id = #{id}
+	 </select>
+	 <!-- 这里处理in的问题 -->
+	 <select id="findByAuto" parameterType="cn.jhd.ec.entity.order.CustomOrderInfo" resultMap="resultOrderInfo">
+	 	SELECT * FROM ecs_order_info
+	 	<where>
+	 		<if test="order_sn!=null">
+	 			and order_sn=#{order_sn}
+	 		</if>
+	 		<if test="consignee!=null">
+	 			and consignee=#{consignee}
+	 		</if>
+	 		<if test="user_id!=null">
+	 			and user_id=#{user_id}
+	 		</if>
+	 		<if test="order_status!=null">
+	 			and order_status=#{order_status}
+	 		</if>
+	 		<if test="ship_statu!=null">
+	 			and shipping_status in 
+				<foreach item="item" index="index" collection="ship_statu" open="("  
+				    separator="," close=")">  
+				    #{item}  
+				</foreach>  
+    		</if> 
+	 		<if test="pay_status!=null">
+	 			and pay_status=#{pay_status}
+	 		</if>
+	 	</where>
+	 		<if test="orderbycolum!=null">
+	 			order by ${orderbycolum}
+	 		</if>
+	 	limit #{startLine} , #{pageSize}
+	 </select>
+	 <select id="findCountByAuto" parameterType="cn.jhd.ec.entity.order.CustomOrderInfo" resultType="int">
+	 	SELECT count(*) FROM ecs_order_info
+	 	<where>
+	 		<if test="order_sn!=null">
+	 			and order_sn=#{order_sn}
+	 		</if>
+	 		<if test="consignee!=null">
+	 			and consignee=#{consignee}
+	 		</if>
+	 		<if test="user_id!=null">
+	 			and user_id=#{user_id}
+	 		</if>
+	 		<if test="order_status!=null">
+	 			and order_status=#{order_status}
+	 		</if>
+	 		<if test="ship_statu!=null">
+	 			and shipping_status in 
+				<foreach item="item" index="index" collection="ship_statu" open="("  
+				    separator="," close=")">  
+				    #{item}  
+				</foreach>  
+    		</if> 
+	 		
+	 		<if test="pay_status!=null">
+	 			and pay_status=#{pay_status}
+	 		</if>
+	 	</where>
+	 	limit 0 , 15
+	 </select>
+</mapper>
+
+
+
+
+
+
+

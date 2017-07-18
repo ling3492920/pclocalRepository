@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.relation.GoodsCatDao"> 
+	 <!-- 查询，并把关联商品查出 -->
+	 
+	 <resultMap type="cn.jhd.ec.entity.relation.GoodsCat"  id="resultCatGoods">
+		<id column="cat_id"/>
+		<collection property="gs" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.goods.Good"
+			select="cn.jhd.ec.dao.goods.GoodDao.findByCatId"
+			column="cat_id">
+		</collection>
+	</resultMap>
+
+	<!-- 根据cat_id关联查询商品 -->
+	 <select id="findByCatId" parameterType="int" resultMap="resultCatGoods">
+	 	select * from ecs_goods_cat where cat_id = #{id}
+	 </select>
+
+	 
+	 <resultMap type="cn.jhd.ec.entity.relation.GoodsCat"  id="resultGoodsCat">
+		<id column="goods_id"/>
+		<collection property="gs" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.goods.GoodsType"
+			select="cn.jhd.ec.dao.goods.GoodsTypeDao.findById"
+			column="goods_id">
+		</collection>
+	</resultMap>
+	 <select id="findByGoodsId" parameterType="int" resultMap="resultGoodsCat">
+	 	select * from ecs_goods_cat where goods_id = #{id}
+	 </select>
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.admin.AdminRoleDao">
+	<select id="findAll" resultType="cn.jhd.ec.entity.admin.AdminRole">
+		SELECT
+		role_id,role_name,action_list,role_describe,permissions
+		FROM
+		`ecs_role` LIMIT 0, 1000
+	</select>
+	<insert id="save" parameterType="cn.jhd.ec.entity.admin.AdminRole" >
+		INSERT INTO ecs_role 
+		(`role_name`, `action_list`, `permissions`, `role_describe`) 
+		VALUES 
+		(#{role_name}, #{action_list}, #{permissions}, #{role_describe})
+	</insert>
+	<update id="edit" parameterType="cn.jhd.ec.entity.admin.AdminRole">
+		update ecs_role
+		<set>
+			<if test="role_name!=null">
+				role_name=#{role_name},
+			</if>
+			<if test="action_list!=null">
+				action_list=#{action_list},
+			</if>
+			<if test="role_describe!=null">
+				role_describe=#{role_describe},
+			</if>
+			<if test="permissions!=null">
+				permissions=#{permissions}
+			</if>
+		</set>
+		where role_id=#{role_id}
+	</update>
+	<select id="findById" parameterType="int" resultType="cn.jhd.ec.entity.admin.CustomAdminRole">
+		SELECT
+		role_id,role_name,action_list,role_describe,permissions
+		FROM
+		ecs_role where role_id=#{id}
+	</select>
+	<delete id="delById" parameterType="int">
+		delete from ecs_role where role_id=#{id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+

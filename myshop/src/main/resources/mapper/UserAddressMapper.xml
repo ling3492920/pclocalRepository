@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.users.UserAddressDao">
+<!-- 
+UPDATE `ecs_user_address` SET 
+`consignee`='叶问', `email`='yewen@ecshop.com',
+ `country`='2', `province`='3', `city`='15', `district`='210', `address`='中关村',
+  `zipcode`='4545', `tel`='4545', `mobile`='54548848', `sign_building`='55454', `best_time`='4545'
+   WHERE 
+   (`address_id`='2')
+ -->
+	<update id="edit" parameterType="cn.jhd.ec.entity.users.UserAddress">
+		UPDATE `ecs_user_address`
+		<set>
+			<if test="consignee!=null">
+				`consignee`=#{consignee},
+			</if>
+			<if test="email!=null">
+				email=#{email},
+			</if>
+			<if test="country !=null">
+				country=#{country},
+			</if>
+			<if test=" province!=null">
+				province=#{province},
+			</if>
+			<if test="city !=null">
+				city=#{city},
+			</if>
+			<if test=" district!=null">
+				district=#{district},
+			</if>
+			<if test="address !=null">
+				address=#{address},
+			</if>
+			<if test=" zipcode!=null">
+				zipcode=#{zipcode},
+			</if>
+			<if test=" tel!=null">
+				tel=#{tel},
+			</if>
+			<if test=" mobile!=null">
+				mobile=#{mobile},
+			</if>
+			<if test=" sign_building!=null">
+				sign_building=#{sign_building},
+			</if>
+			<if test=" best_time!=null">
+				best_time=#{best_time}
+			</if>
+		</set>
+		WHERE `address_id`=#{address_id}
+	</update>
+	 <!-- 
+	 INSERT INTO `ecs_user_address` 
+	 (`user_id`, `consignee`, `email`, `country`, `province`, `city`,
+	  `district`, `address`, `zipcode`, `tel`, `mobile`, `sign_building`,
+	   `best_time`)
+	    VALUES 
+	 ('6', '马三', 'yyy@qq.com', '1', '2', '52', '502', '马三元', '1515',
+	  '62626', '5455', '10020', '65656')
+	  -->
+	 <insert id="save" parameterType="cn.jhd.ec.entity.users.UserAddress">
+	 	INSERT INTO `ecs_user_address` 
+	 (`user_id`, `consignee`, `email`, `country`, `province`, `city`,
+	  `district`, `address`, `zipcode`, `tel`, `mobile`, `sign_building`,
+	   `best_time`)
+	    VALUES
+	  (#{user_id},#{consignee},#{email},#{country},#{province},#{city},#{district},
+	  #{address},#{zipcode},#{tel},#{mobile},#{sign_building},#{best_time})
+	 </insert>
+	 
+	 <delete id="delById" parameterType="int">
+	 	DELETE FROM `ecs_user_address` WHERE `address_id`=#{id}
+	 </delete>
+	 
+	 
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="Generator" content="ECSHOP v2.7.1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>用户中心_ECSHOP演示站 - Powered by ECShop</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="animated_favicon.gif" type="image/gif">
+    <link href="../themes/default/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="../js/common.js"></script>-->
+    <script type="text/javascript" src="../js/user.js"></script>
+    <script type="text/javascript" src="../js/transport.js"></script>
+    <script type="text/javascript" >
+        $(function(){
+            $("#username").blur(function(){
+                var username = $("#username").val();
+                console.log=(username);
+//                $("#username_notice").append(" 可以注册!")
+                //验证用户名是否可以注册
+//                $.ajax({
+//                    type: "get",
+//                    url: path+"user/checkUserName.do",
+//                    data:{userName:username} ,
+//                    contentType: "application/json; charset=utf-8",
+//                    dataType: "json",
+//                    success: function (result) {
+//                        if(result.state==0){//说明用户名不存在可以注册
+//                            $("#username_notice").append("可以注册!")
+//                        }else {
+//                            $("#username_notice").append("对不起该用户名已经存在，请重新输入！")
+//                        }
+//
+//                    },
+//                    error: function () {
+//                        alert("error");
+//                    }
+//                });
+            });
+            $("#subtn_reg").click(function(){
+                //注册成功，则操作父页面连接到首页
+//                window.location.href="http://localhost:63342/webtest/welcome.html";
+                var username = $("#username").val();
+                var email = $("#email").val();
+                var password = $("#password1").val();
+                var conform_pwd = $("#conform_password").val();
+                var msn = $("#msn").val();
+                var qq = $("#qq").val();
+                var officephone = $("#officephone").val();
+                var homephone=$("#homephone").val();
+                var mobilephone=$("#mobilephone").val();
+                var sel_question = $("#sel_question").val();
+                var pass_answer=$("#passwd_answer").val();
+                var aggreement = $("#agreement").val();
+
+                var user = JSON.stringify(
+                    {username: username, email: email,password:password,conform_pwd:conform_pwd,
+                        msn:msn,qq:qq,officephone:officephone,homephone:homephone,mobilephone:mobilephone,
+                        sel_question:sel_question,pass_answer:pass_answer,aggreement:aggreement}
+                );
+                console.log(user);
+                //最后：发送注册请求
+                $.ajax({
+                    type: "post",
+                    url: path+"user/saveUser.do",
+                    data:{user:user} ,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if(result.state==0){
+                            addCookie("username",username);
+                            addCookie("user_id",result.getData.user_id);
+                            window.location.href=path+"welcome.html";
+                        }
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body style="padding-top: 0;margin-top: 0">
+<div class="usBox">
+    <div class="usBox_2 clearfix">
+        <div class="regtitle"></div>
+        <!--<form action="user.php" method="post" name="formUser" onsubmit="return register();">-->
+            <table width="100%" border="0" align="left" cellpadding="5" cellspacing="3">
+                <tbody><tr>
+                    <td width="13%" align="right">用户名</td>
+                    <td width="87%">
+                        <input name="username" type="text" size="25" id="username" class="inputBg">
+                        <span id="username_notice" style="color:#FF0000"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">email</td>
+                    <td>
+                        <input name="email" type="text" size="25" id="email" onblur="checkEmail(this.value);" class="inputBg">
+                        <span id="email_notice" style="color:#FF0000"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">密码</td>
+                    <td>
+                        <input name="password" type="password" id="password1" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)" class="inputBg" style="width:179px;">
+                        <span style="color:#FF0000" id="password_notice"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">密码强度</td>
+                    <td>
+                        <table width="145" border="0" cellspacing="0" cellpadding="1">
+                            <tbody><tr align="center">
+                                <td width="33%" id="pwd_lower">弱</td>
+                                <td width="33%" id="pwd_middle">中</td>
+                                <td width="33%" id="pwd_high">强</td>
+                            </tr>
+                            </tbody></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">确认密码</td>
+                    <td>
+                        <input name="confirm_password" type="password" id="conform_password" onblur="check_conform_password(this.value);" class="inputBg" style="width:179px;">
+                        <span style="color:#FF0000" id="conform_password_notice"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" id="extend_field1i">MSN          </td><td>
+                    <input name="extend_field1" id="msn" type="text" size="25" class="inputBg"><span style="color:#FF0000"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" id="extend_field2i">QQ          </td><td>
+                    <input name="extend_field2" id="qq" type="text" size="25" class="inputBg"><span style="color:#FF0000"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" id="extend_field3i">办公电话          </td>
+                    <td>
+                    <input name="extend_field3" id="officephone" type="text" size="25" class="inputBg"><span style="color:#FF0000"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" id="extend_field4i">家庭电话          </td><td>
+                    <input name="extend_field4" id="homephone" type="text" size="25" class="inputBg"><span style="color:#FF0000"> *</span>          </td>
+                </tr>
+                <tr>
+                    <td align="right" id="extend_field5i">手机          </td><td>
+                    <input name="extend_field5" id="mobilephone" type="text" size="25" class="inputBg"><span style="color:#FF0000"> *</span>          </td>
+                </tr>
+                <tr>
+                    <td align="right">密码提示问题</td>
+                    <td>
+                        <select name="sel_question" id="sel_question">
+                            <option value="0">请选择密码提示问题</option>
+                            <option value="friend_birthday">我最好朋友的生日？</option>
+                            <option value="old_address">我儿时居住地的地址？</option>
+                            <option value="motto">我的座右铭是？</option>
+                            <option value="favorite_movie">我最喜爱的电影？</option>
+                            <option value="favorite_song">我最喜爱的歌曲？</option>
+                            <option value="favorite_food">我最喜爱的食物？</option>
+                            <option value="interest">我最大的爱好？</option>
+                            <option value="favorite_novel">我最喜欢的小说？</option>
+                            <option value="favorite_equipe">我最喜欢的运动队？</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" id="passwd_quesetion">密码问题答案</td>
+                    <td>
+                        <input name="passwd_answer" id="passwd_answer" type="text" size="25" class="inputBg" maxlengt="20"><span style="color:#FF0000"> *</span>          </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><label>
+                        <input name="agreement" id="agreement" type="checkbox" value="1" checked="checked">
+                        我已看过并接受《<a href="article.php?cat_id=-1" style="color:blue" target="_blank">用户协议</a>》</label></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td align="left">
+                        <input name="act" type="hidden" value="act_register">
+                        <input type="hidden" name="back_act" value="">
+                        <input name="Submit" id="subtn_reg" type="submit" value="" class="us_Submit_reg">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td class="actionSub">
+                        <a href="/webtest/user.html">我已有账号，我要登录</a><br>
+                        <a href="/webtest/user.html?index=get_password">您忘记密码了吗？</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        <!--</form>-->
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+    var username_empty = "- 用户名不能为空。";
+    var username_shorter = "- 用户名长度不能少于 3 个字符。";
+    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+    var password_empty = "- 登录密码不能为空。";
+    var password_shorter = "- 登录密码不能少于 6 个字符。";
+    var confirm_password_invalid = "- 两次输入密码不一致";
+    var email_empty = "- Email 为空";
+    var email_invalid = "- Email 不是合法的地址";
+    var agreement = "- 您没有接受协议";
+    var msn_invalid = "- msn地址不是一个有效的邮件地址";
+    var qq_invalid = "- QQ号码不是一个有效的号码";
+    var home_phone_invalid = "- 家庭电话不是一个有效号码";
+    var office_phone_invalid = "- 办公电话不是一个有效号码";
+    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+    var msg_un_blank = "* 用户名不能为空";
+    var msg_un_length = "* 用户名最长不得超过7个汉字";
+    var msg_un_format = "* 用户名含有非法字符";
+    var msg_un_registered = "* 用户名已经存在,请重新输入";
+    var msg_can_rg = "* 可以注册";
+    var msg_email_blank = "* 邮件地址不能为空";
+    var msg_email_registered = "* 邮箱已存在,请重新输入";
+    var msg_email_format = "* 邮件地址不合法";
+    var msg_blank = "不能为空";
+    var no_select_question = "- 您没有完成密码提示问题的操作";
+    var passwd_balnk = "- 密码中不能包含空格";
+    var username_exist = "用户名 %s 已经存在";
+</script>
+</html>

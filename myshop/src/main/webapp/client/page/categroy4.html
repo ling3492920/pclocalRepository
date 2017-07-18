@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="Generator" content="ECSHOP v2.7.1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>3G手机_手机类型_ECSHOP演示站 - Powered by ECShop</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="animated_favicon.gif" type="image/gif">
+    <link href="../themes/default/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/global.js"></script>
+    <script type="text/javascript" src="../js/compare.js"></script>
+</head>
+<body>
+<div class="block clearfix">
+
+    <div class="AreaL">
+
+        <div class="cart" id="ECS_CARTINFO">
+            <a href="flow.php" title="查看购物车">您的购物车中有 0 件商品，总计金额 ￥0.00元。</a></div>
+        <div class="blank5"></div>
+        <div class="box">
+            <div class="box_1">
+                <div id="category_tree">
+                    <dl>
+                        <dt><a href="category.php?id=2">CDMA手机</a></dt>
+
+                    </dl>
+                    <dl>
+                        <dt><a href="category.php?id=3">GSM手机</a></dt>
+
+                    </dl>
+                    <dl>
+                        <dt><a href="category.php?id=4">3G手机</a></dt>
+
+                    </dl>
+                    <dl>
+                        <dt><a href="category.php?id=5">双模手机</a></dt>
+
+                    </dl>
+
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+        <div class="box" id="history_div" style="display: none;">
+            <div class="box_1">
+                <h3><span>浏览历史</span></h3>
+                <div class="boxCenterList clearfix" id="history_list">
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+        <script type="text/javascript">
+            if (document.getElementById('history_list').innerHTML.replace(/\s/g,'').length<1)
+            {
+                document.getElementById('history_div').style.display='none';
+            }
+            else
+            {
+                document.getElementById('history_div').style.display='block';
+            }
+            function clear_history()
+            {
+                Ajax.call('user.php', 'act=clear_history',clear_history_Response, 'GET', 'TEXT',1,1);
+            }
+            function clear_history_Response(res)
+            {
+                document.getElementById('history_list').innerHTML = '您已清空最近浏览过的商品';
+            }
+        </script>
+
+    </div>
+
+
+    <div class="AreaR">
+
+        <div class="box">
+            <div class="box_1">
+                <h3><span>商品筛选</span></h3>
+                <div class="screeBox">
+                    <strong>品牌：</strong>
+                    <span>全部</span>
+                    <a href="category.php?id=4&amp;brand=1&amp;price_min=0&amp;price_max=0">诺基亚</a>&nbsp;
+                    <a href="category.php?id=4&amp;brand=8&amp;price_min=0&amp;price_max=0">LG</a>&nbsp;
+                </div>
+                <div class="screeBox">
+                    <strong>价格：</strong>
+                    <span>全部</span>
+                    <a href="category.php?id=4&amp;price_min=1300&amp;price_max=1600">1300&nbsp;-&nbsp;1600</a>&nbsp;
+                    <a href="category.php?id=4&amp;price_min=2500&amp;price_max=2800">2500&nbsp;-&nbsp;2800</a>&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+
+
+        <div class="box">
+            <div class="box_2 centerPadd">
+                <div class="itemTit" id="itemBest">
+                </div>
+                <div id="show_best_area" class="clearfix goodsBox">
+                    <div class="goodsItem">
+                        <span class="best"></span>
+                        <a href="goods.php?id=1"><img src="../images/200905/thumb_img/1_thumb_G_1240902890710.jpg" alt="KD876" class="goodsimg"></a><br>
+                        <p><a href="goods.php?id=1" title="KD876">KD876</a></p>
+                        <font class="f1">
+                            ￥1388元                     </font>
+                    </div>
+                    <div class="more"><a href="search.php?intro=best"><img src="../themes/default/images/more.gif"></a></div>
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+        <div class="box">
+            <div class="box_1">
+                <h3>
+                    <span>商品列表</span>
+                    <form method="GET" class="sort" name="listform">
+                        显示方式：
+                        <a href="javascript:;" onclick="javascript:display_mode('list')"><img src="../themes/default/images/display_mode_list.gif" alt=""></a>
+                        <a href="javascript:;" onclick="javascript:display_mode('grid')"><img src="../themes/default/images/display_mode_grid_act.gif" alt=""></a>
+                        <a href="javascript:;" onclick="javascript:display_mode('text')"><img src="../themes/default/images/display_mode_text.gif" alt=""></a>&nbsp;&nbsp;
+                        <select name="sort" style="border:1px solid #ccc;">
+                            <option value="goods_id" selected="">按上架时间排序</option><option value="shop_price">按价格排序</option><option value="last_update">按更新时间排序</option>      </select>
+                        <select name="order" style="border:1px solid #ccc;">
+                            <option value="DESC" selected="">倒序</option><option value="ASC">正序</option>      </select>
+                        <input type="image" name="imageField" src="../themes/default/images/bnt_go.gif" alt="go">
+                        <input type="hidden" name="category" value="4">
+                        <input type="hidden" name="display" value="grid" id="display">
+                        <input type="hidden" name="brand" value="0">
+                        <input type="hidden" name="price_min" value="0">
+                        <input type="hidden" name="price_max" value="0">
+                        <input type="hidden" name="filter_attr" value="0">
+                        <input type="hidden" name="page" value="1">
+                    </form>
+                </h3>
+                <form name="compareForm" action="compare.php" method="post" onsubmit="return compareGoods(this);">
+                    <div class="centerPadd">
+                        <div class="clearfix goodsBox" style="border:none;">
+                            <div class="goodsItem">
+                                <a href="goods.php?id=14"><img src="../images/200905/thumb_img/14_thumb_G_1241968492116.jpg" alt="诺基亚5800..." class="goodsimg"></a><br>
+                                <p><a href="goods.php?id=14" title="诺基亚5800XM">诺基亚5800...</a></p>
+                                市场价<font class="market_s">￥3150元</font><br>
+                                本店价<font class="shop_s">￥2625元</font><br>
+                                <a href="javascript:collect(14);" class="f6">收藏</a> |
+                                <a href="javascript:addToCart(14)" class="f6">购买</a> |
+                                <a href="javascript:;" id="compareLink" onclick="Compare.add(14,'诺基亚5800...','9')" class="f6">比较</a>
+                            </div>
+                            <div class="goodsItem">
+                                <a href="goods.php?id=1"><img src="../images/200905/thumb_img/1_thumb_G_1240902890710.jpg" alt="KD876" class="goodsimg"></a><br>
+                                <p><a href="goods.php?id=1" title="KD876">KD876</a></p>
+                                市场价<font class="market_s">￥1666元</font><br>
+                                本店价<font class="shop_s">￥1388元</font><br>
+                                <a href="javascript:collect(1);" class="f6">收藏</a> |
+                                <a href="javascript:addToCart(1)" class="f6">购买</a> |
+                                <a href="javascript:;" id="compareLink" onclick="Compare.add(1,'KD876','9')" class="f6">比较</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="blank5"></div>
+        <script type="Text/Javascript" language="JavaScript">
+            <!--
+            function selectPage(sel)
+            {
+                sel.form.submit();
+            }
+            //-->
+        </script>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                Compare.init();
+                fixpng();
+            }
+            var button_compare = '';
+            var exist = "您已经选择了%s";
+            var count_limit = "最多只能选择4个商品进行对比";
+            var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+            var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+            var btn_buy = "购买";
+            var is_cancel = "取消";
+            var select_spe = "请选择商品属性";
+        </script>
+        <form name="selectPageForm" action="/ws/ecshop/upload/category.php" method="get">
+            <div id="pager" class="pagebar">
+                <span class="f_l f6" style="margin-right:10px;">总计 <b>2</b>  个记录</span>
+
+            </div>
+        </form>
+        <script type="Text/Javascript" language="JavaScript">
+            <!--
+            function selectPage(sel)
+            {
+                sel.form.submit();
+            }
+            //-->
+        </script>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.admin.AdminUserActionDao">
+	<resultMap type="cn.jhd.ec.entity.admin.AdminUserAction"  id="postResultMap">
+		<id column="id" property="id"/>
+		<result column="userid" property="userid"/>
+		<result column="action_id" property="action_id"/>
+		<result column="parent_id" property="parent_id"/>
+		<result column="action_code" property="action_code"/>
+		<result column="url" property="url"/>
+		<result column="action_name" property="action_name"/>
+		<collection property="aus" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.admin.AdminUserAction"
+			select="findSecond"
+			column="action_id">
+		</collection>
+	</resultMap>
+	<select id="findFirst" resultMap="postResultMap" >
+		select * from esc_user_action where userid=#{user_id} and parent_id=0
+	</select>
+	
+	<select id="findSecond" resultType="cn.jhd.ec.entity.admin.AdminUserAction">
+		select * from esc_user_action where parent_id=#{action_id}
+	</select>
+
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+

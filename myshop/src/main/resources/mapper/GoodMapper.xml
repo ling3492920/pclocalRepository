@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.goods.GoodDao">
+	<select id="findAll" resultType="cn.jhd.ec.entity.goods.Good">
+		select * from ecs_goods WHERE is_delete = 0 order by goods_id limit ${startline},${pageSize} 
+	</select>
+	
+	<select id="findById" resultType="cn.jhd.ec.entity.goods.Good" parameterType="int">
+		select * from ecs_goods where goods_id = #{id}
+	</select>
+	
+	<select id="findByCatId" resultType="cn.jhd.ec.entity.goods.Good" parameterType="int">
+		select 
+		goods_id,goods_name,shop_price,goods_thumb 
+		from 
+		ecs_goods where cat_id=#{cat_id}
+	</select>
+	
+	<select id="findByIdAboutBrand" resultType="cn.jhd.ec.entity.goods.GoodsAboutBrand" parameterType="int">
+		select * from ecs_goods,ecs_brand where ecs_goods.goods_id=#{id}
+			and ecs_goods.brand_id=ecs_brand.brand_id;
+	</select>
+	
+	<select id="findById2" resultType="cn.jhd.ec.entity.relation.CusTomGoodsCat" parameterType="int">
+		select ecs_goods.*,ecs_goods_type.* from ecs_goods,ecs_goods_type where ecs_goods.goods_id = #{id} 
+			and ecs_goods.cat_id=ecs_goods_type.cat_id
+	</select>
+	
+	<!-- 
+		主键：goods_id外键：cat_id（对应商品类型）外键：brand_id(对应手机品牌id）
+goods_sn:商品货号goods_number:库存数量goods_weight:商品重量promote_start_date:促销开始日期
+promote_end_date:促销结束日期sort_order:last_update:最后一次更改时间goods_name:商品名称
+goods_name_style:商品名称字体样式click_count:点击次数market_price:市场价shop_price:本店售价
+promote_price:c促销价warn_number:库存警告数量keywords:商品关键词goods_brief:商品简单描述
+goods_desc:商品描述goods_thumb:商品缩略图路径goods_img:商品预览图路径original_img:原图路径
+is_on_sale:是否上架is_alone_sale:是否单品integral:积分购买金额add_time:上架时间is_delete:是否删除
+is_best:是否精品is_new:是否新品is_hot:是否热销is_promote:是否促销goods_type:商品类型
+seller_note:商家备注
+	 -->
+	<update	id="edit" parameterType="cn.jhd.ec.entity.goods.Good">
+		UPDATE ecs_goods
+		<set>
+			<if	test="cat_id!=null">
+				cat_id=#{cat_id},
+			</if>
+			<if	test="brand_id!=null">
+				brand_id=#{brand_id},
+			</if>
+			<if	test="goods_sn!=null">
+				goods_sn=#{goods_sn},
+			</if>
+			<if	test="goods_number!=null">
+				goods_number=#{goods_number},
+			</if>
+			<if	test="goods_weight!=null">
+				goods_weight=#{goods_weight},
+			</if>
+			<if	test="promote_start_date!=null">
+				promote_start_date=#{promote_start_date},
+			</if>
+			<if	test="promote_end_date!=null">
+				promote_end_date=#{promote_end_date},
+			</if>
+			<if	test="sort_order!=null">
+				sort_order=#{sort_order},
+			</if>
+			<if	test="last_update!=null">
+				last_update=#{last_update},
+			</if>
+			<if	test="goods_name!=null">
+				goods_name=#{goods_name},
+			</if>
+			<if	test="goods_name_style!=null">
+				goods_name_style=#{goods_name_style},
+			</if>
+			<if	test="click_count!=null">
+				click_count=#{click_count},
+			</if>
+			<if	test="market_price!=null">
+				market_price=#{market_price},
+			</if>
+			<if	test="shop_price!=null">
+				shop_price=#{shop_price},
+			</if>
+			<if	test="promote_price!=null">
+				promote_price=#{promote_price},
+			</if>
+			<if	test="warn_number!=null">
+				warn_number=#{warn_number},
+			</if>
+			<if	test="keywords!=null">
+				keywords=#{keywords},
+			</if>
+			<if	test="goods_brief!=null">
+				goods_brief=#{goods_brief},
+			</if>
+			<if	test="goods_desc!=null">
+				goods_desc=#{goods_desc},
+			</if>
+			<if	test="goods_thumb!=null">
+				goods_thumb=#{goods_thumb},
+			</if>
+			<if	test="goods_img!=null">
+				goods_img=#{goods_img},
+			</if>
+			<if	test="original_img!=null">
+				original_img=#{original_img},
+			</if>
+			<if	test="is_on_sale!=null">
+				is_on_sale=#{is_on_sale},
+			</if>
+			<if	test="is_alone_sale!=null">
+				is_alone_sale=#{is_alone_sale},
+			</if>
+			<if	test="integral!=null">
+				integral=#{integral},
+			</if>
+			<if	test="add_time!=null">
+				add_time=#{add_time},
+			</if>
+			<if	test="is_delete!=null">
+				is_delete=#{is_delete},
+			</if>
+			<if	test="is_best!=null">
+				is_best=#{is_best},
+			</if>
+			<if	test="is_new!=null">
+				is_new=#{is_new},
+			</if>
+			<if	test="is_hot!=null">
+				is_hot=#{is_hot},
+			</if>
+			<if test="is_promote!=null">
+				is_promote=#{is_promote},
+			</if>
+			<if test="goods_type!=null">
+				goods_type=#{goods_type},
+			</if>
+			<if test="seller_note!=null">
+				seller_note=#{seller_note}
+			</if>
+		</set>
+		WHERE goods_id=#{goods_id}
+	</update>
+	
+	<!-- 
+		主键：goods_id外键：cat_id（对应商品类型）外键：brand_id(对应手机品牌id）
+goods_sn:商品货号goods_number:库存数量goods_weight:商品重量promote_start_date:促销开始日期
+promote_end_date:促销结束日期sort_order:last_update:最后一次更改时间goods_name:商品名称
+goods_name_style:商品名称字体样式click_count:点击次数market_price:市场价shop_price:本店售价
+promote_price:c促销价warn_number:库存警告数量keywords:商品关键词goods_brief:商品简单描述
+goods_desc:商品描述goods_thumb:商品缩略图路径goods_img:商品预览图路径original_img:原图路径
+is_on_sale:是否上架is_alone_sale:是否单品integral:积分购买金额add_time:上架时间is_delete:是否删除
+is_best:是否精品is_new:是否新品is_hot:是否热销is_promote:是否促销goods_type:商品类型
+seller_note:商家备注
+	 -->
+	 <!-- 
+	<insert id="save" parameterType="cn.jhd.ec.entity.goods.Good">
+		insert into ecs_goods
+		(cat_id,brand_id,goods_sn,goods_number,goods_weight,promote_start_date,
+		promote_end_date,sort_order,last_update,goods_name,goods_name_style,click_count,
+		market_price,shop_price,promote_price,warn_number,keywords,goods_brief,
+		goods_desc,goods_thumb,goods_img,original_img,is_on_sale,is_alone_sale,
+		integral,add_time,is_delete,is_best,is_new,is_hot,
+		is_promote,goods_type,seller_note
+		)
+		values
+		(#{cat_id},#{brand_id},#{goods_sn},#{goods_number},#{goods_weight},#{promote_start_date}
+		,#{promote_end_date},#{sort_order},#{last_update},#{goods_name},#{goods_name_style},#{click_count}
+		,#{market_price},#{shop_price},#{promote_price},#{warn_number},#{keywords},#{goods_brief}
+		,#{goods_desc},#{goods_thumb},#{goods_img},#{original_img},#{is_on_sale},#{is_alone_sale}
+		,#{integral},#{add_time},#{is_delete},#{is_best},#{is_new},#{is_hot}
+		,#{is_promote},#{goods_type},#{seller_note}	
+		)
+	</insert>
+	 -->
+	<insert id="save" parameterType="cn.jhd.ec.entity.goods.Good" >
+         insert  ecs_goods <include refid="ecs_goodsSet" />
+    </insert >
+    
+    <sql id="ecs_goodsSet">
+         <set >
+         <if test= "cat_id != null">cat_id=#{cat_id},</if >
+         <if test= "brand_id != null">brand_id=#{brand_id},</if >
+         <if test= "goods_sn != null">goods_sn=#{goods_sn},</if >
+         <if test= "goods_number != null">goods_number=#{goods_number},</if >
+         <if test= "goods_weight != null">goods_weight=#{goods_weight},</if >
+         <if test= "promote_start_date != null">promote_start_date=#{promote_start_date},</if >
+         
+         <if test= "promote_end_date != null">promote_end_date=#{promote_end_date},</if >
+         <if test= "sort_order != null">sort_order=#{sort_order},</if >
+         <if test= "last_update != null">last_update=#{last_update},</if >
+         <if test= "goods_name != null">goods_name=#{goods_name},</if >
+         <if test= "goods_name_style != null">goods_name_style=#{goods_name_style},</if >
+         <if test= "click_count != null">click_count=#{click_count},</if >
+         
+         <if test= "market_price != null">market_price=#{market_price},</if >
+         <if test= "shop_price != null">shop_price=#{shop_price},</if >
+         <if test= "promote_price != null">promote_price=#{promote_price},</if >
+         <if test= "warn_number != null">warn_number=#{warn_number},</if >
+         <if test= "keywords != null">keywords=#{keywords},</if >
+         <if test= "goods_brief != null">goods_brief=#{goods_brief},</if >
+         
+         <if test= "goods_desc != null">goods_desc=#{goods_desc},</if >
+         <if test= "goods_thumb != null">goods_thumb=#{goods_thumb},</if >
+         <if test= "goods_img != null">goods_img=#{goods_img},</if >
+         <if test= "original_img != null">original_img=#{original_img},</if >
+         <if test= "is_on_sale != null">is_on_sale=#{is_on_sale},</if >
+         <if test= "is_alone_sale != null">is_alone_sale=#{is_alone_sale},</if >
+         
+         <if test= "integral != null">integral=#{integral},</if >
+         <if test= "add_time != null">add_time=#{add_time},</if >
+         <if test= "is_delete != null">is_delete=#{is_delete},</if >
+         <if test= "is_best != null">is_best=#{is_best},</if >
+         <if test= "is_new != null">is_new=#{is_new},</if >
+         <if test= "is_hot != null">is_hot=#{is_hot},</if >
+         
+         <if test= "is_promote != null">is_promote=#{is_promote},</if >
+         <if test= "goods_type != null">goods_type=#{goods_type},</if >
+         <if test= "seller_note != null">seller_note=#{seller_note},</if >
+         </set>
+    </sql >
+	
+	<delete id="delById" parameterType="int">
+		DELETE FROM ecs_goods WHERE goods_id=#{id}
+	</delete>
+	
+	<select id="findAuto" parameterType="cn.jhd.ec.entity.goods.CustomGood" resultType="cn.jhd.ec.entity.goods.Good">
+		select goods_id,goods_name,shop_price,goods_thumb from ecs_goods
+		<where>
+			<if test="cat_id!=null">
+				and cat_id=#{cat_id} 
+			</if>
+			<if test="brand_id!=null">
+				and brand_id=#{brand_id}
+			</if>
+			<if test="shop_price!=null">
+				and shop_price in #{shop_price}
+			</if>
+			
+			<if test="keywords!=null">
+				and keywords=#{keywords} 
+			</if>
+			<if test="is_alone_sale!=null">
+				is_alone_sale=#{is_alone_sale} 
+			</if>
+			<if test="add_time!=null">
+				add_time=#{add_time} 
+			</if>
+			<if test="is_delete!=null">
+				and is_delete=#{is_delete} 
+			</if>
+			<if test="is_best!=null">
+				and is_best=#{is_best} 
+			</if>
+			<if test="is_new!=null">
+				and is_new=#{is_new}
+			</if>
+			<if test="is_hot!=null">
+				and is_hot=#{is_hot}
+			</if>
+			<if test="is_promote!=null">
+				and is_promote=#{is_promote}
+			</if>
+			<if test="last_update!=null">
+				and last_update=#{last_update}
+			</if>
+		</where>
+		limit #{startPos},#{pageSize}
+	</select>
+	
+	<select id="findAuto2" parameterType="cn.jhd.ec.entity.goods.CustomGoods" resultType="cn.jhd.ec.entity.goods.Good">
+		select 
+		goods_id,goods_name,goods_sn,shop_price,is_on_sale,is_best,is_new,is_hot,sort_order,goods_number
+		,cat_id,brand_id,is_promote,suppliers_id
+		 from ecs_goods
+		<where>
+			<if test="cat_id!=null">
+				and cat_id=#{cat_id} 
+			</if>
+			<if test="brand_id!=null">
+				and brand_id=#{brand_id}
+			</if>
+			<if test="is_best!=null">
+				and is_best=#{is_best} 
+			</if>
+			<if test="is_new!=null">
+				and is_new=#{is_new}
+			</if>
+			<if test="is_hot!=null">
+				and is_hot=#{is_hot}
+			</if>
+			<if test="is_promote!=null">
+				and is_promote=#{is_promote}
+			</if>
+			<if test="is_on_sale!=null">
+				and is_on_sale=#{is_on_sale}
+			</if>
+			<if test="suppliers_id!=null">
+				and suppliers_id=#{suppliers_id}
+			</if>
+			<if test="keywords!=null">
+				and keywords like #{keywords}
+			</if>
+			<if test="is_delete!=null">
+				and is_delete=#{is_delete}
+			</if>
+			
+		</where>
+		limit #{startLine},#{pageSize}
+	</select>
+	
+	<select id="findByGoods_sn" resultType="cn.jhd.ec.entity.goods.Good"  parameterType="string">
+		SELECT goods_id,goods_name,shop_price,goods_thumb FROM `ecs_goods` WHERE `goods_sn` = #{goods_sn}
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT count(*) FROM `ecs_goods` WHERE `is_delete` = 0
+	</select>
+</mapper>
+
+
+
+
+
+
+

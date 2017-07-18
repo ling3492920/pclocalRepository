@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.goods.CategoryDao">	
+<!-- 查询所有的1级分类，根据cat_id 关联parent_id关联查询到所有2级分类 -->
+	<select id="findParentsCate" resultMap="resultMapCategory">
+		select * from ecs_category where parent_id=0
+	</select>
+	
+	<resultMap id="resultMapCategory" type="cn.jhd.ec.entity.goods.Category">
+		<id column="cat_id" property="cat_id"/>
+		<result column="cat_name" property="cat_name"/>
+		<result column="keywords" property="keywords"/>
+		<result column="cat_desc" property="cat_desc"/>
+		<result column="parent_id" property="parent_id"/>
+		<result column="sort_order" property="sort_order"/>
+		<result column="template_file" property="template_file"/>
+		<result column="measure_unit" property="measure_unit"/>
+		<result column="show_in_nav" property="show_in_nav"/>
+		<result column="style" property="style"/>
+		<result column="is_show" property="is_show"/>
+		<result column="grade" property="grade"/>
+		<result column="filter_attr" property="filter_attr"/>
+		<collection property="cats" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.goods.Category"
+			select="findBabyByParent_id"
+			column="cat_id"/>
+		<collection property="goods" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.goods.Good"
+			select="cn.jhd.ec.dao.goods.GoodDao.findByCatId"
+			column="cat_id"/>
+	</resultMap>
+	<select id ="findBabyByParent_id" resultMap="resultMapCategory"  parameterType="int">
+		select * from ecs_category where parent_id=#{cat_id}
+	</select>
+	
+	
+	
+	<select id="findBabyGoods" resultMap="resultMapCategory" parameterType="int">
+		select * from ecs_category where parent_id!=0 and cat_id=#{cat_id}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+

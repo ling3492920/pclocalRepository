@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.admin.AdminLogDao">
+	<select id="findAuto" parameterType="cn.jhd.ec.entity.admin.CustomAdminLog" resultType="cn.jhd.ec.entity.admin.CustomAdminLog">
+		
+		SELECT alog.*,auser.user_name 
+		FROM ecs_admin_log alog,ecs_admin_user auser  
+		<where>
+			<if test="log_id!=null">
+				and alog.log_id=#{log_id}
+			</if>
+			<if test="log_time!=null">
+				and alog.log_time=#{log_time}
+			</if>
+			<if test="user_id!=null">
+				and alog.user_id=#{user_id}
+			</if>
+			<if test="ip_address!=null">
+				and alog.ip_address=#{ip_address}
+			</if>
+			<if test="log_info!=null">
+				and alog.log_info like #{log_info}
+			</if>
+			 and alog.user_id=auser.user_id
+		</where>
+		LIMIT #{startLine}, #{pageSize}
+	</select>
+	
+	<select id="count" parameterType="cn.jhd.ec.entity.admin.CustomAdminLog" resultType="int">
+		SELECT count(*) FROM `ecs_admin_log` 
+		<where>
+			<if test="log_id!=null">
+				and log_id=#{log_id}
+			</if>
+			<if test="log_time!=null">
+				and log_time=#{log_time}
+			</if>
+			<if test="user_id!=null">
+				and user_id=#{user_id}
+			</if>
+			<if test="ip_address!=null">
+				and ip_address=#{ip_address}
+			</if>
+			<if test="log_info!=null">
+				and log_info like #{log_info}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="save" parameterType="cn.jhd.ec.entity.admin.AdminLog" >
+		insert into ecs_admin_log values(#{log_time},#{user_id},#{log_info},#{ip_address})
+	</insert>
+	
+	<select id="findIP" resultType="string">
+		select ip_address from ecs_admin_log group by ip_address
+ 	</select>
+ 	
+ 	<delete id="delAuto" parameterType="java.util.Map"> 
+ 		delete from ecs_admin_log 
+ 		<where>
+ 			<if test="user_id!=null">
+				and user_id=#{user_id}
+			</if>
+			<if test="log_time!=null">
+				and log_time&lt;#{log_time}
+			</if>
+			<if test="log_id!=null">
+				and log_id=#{log_id}
+			</if>
+ 		</where>
+ 	</delete>
+ </mapper>
+
+
+
+
+
+
+

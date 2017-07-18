@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="Generator" content="ECSHOP v2.7.1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>团购商品_ECSHOP演示站 - Powered by ECShop</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="animated_favicon.gif" type="image/gif">
+    <link href="../themes/default/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/common.js"></script></head>
+<body>
+<div class="block clearfix">
+
+    <div class="AreaL">
+
+        <div class="cart" id="ECS_CARTINFO">
+            <a href="flow.php" title="查看购物车">您的购物车中有 0 件商品，总计金额 ￥0.00元。</a></div>
+        <div class="blank5"></div>
+        <div class="box">
+            <div class="box_1">
+                <div id="category_tree">
+                    <dl>
+                        <dt><a href="category.php?id=1">手机类型</a></dt>
+                        <dd><a href="category.php?id=2">CDMA手机</a></dd>
+                        <dd><a href="category.php?id=3">GSM手机</a></dd>
+                        <dd><a href="category.php?id=4">3G手机</a></dd>
+                        <dd><a href="category.php?id=5">双模手机</a></dd>
+
+                    </dl>
+                    <dl>
+                        <dt><a href="category.php?id=6">手机配件</a></dt>
+                        <dd><a href="category.php?id=7">充电器</a></dd>
+                        <dd><a href="category.php?id=8">耳机</a></dd>
+                        <dd><a href="category.php?id=9">电池</a></dd>
+                        <dd><a href="category.php?id=11">读卡器和内存卡</a></dd>
+
+                    </dl>
+                    <dl>
+                        <dt><a href="category.php?id=12">充值卡</a></dt>
+                        <dd><a href="category.php?id=13">小灵通/固话充值卡</a></dd>
+                        <dd><a href="category.php?id=14">移动手机充值卡</a></dd>
+                        <dd><a href="category.php?id=15">联通手机充值卡</a></dd>
+
+                    </dl>
+
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+
+
+
+
+
+        <div class="box" id="history_div" style="display: none;">
+            <div class="box_1">
+                <h3><span>浏览历史</span></h3>
+                <div class="boxCenterList clearfix" id="history_list">
+                </div>
+            </div>
+        </div>
+        <div class="blank5"></div>
+        <script type="text/javascript">
+            if (document.getElementById('history_list').innerHTML.replace(/\s/g,'').length<1)
+            {
+                document.getElementById('history_div').style.display='none';
+            }
+            else
+            {
+                document.getElementById('history_div').style.display='block';
+            }
+            function clear_history()
+            {
+                Ajax.call('user.php', 'act=clear_history',clear_history_Response, 'GET', 'TEXT',1,1);
+            }
+            function clear_history_Response(res)
+            {
+                document.getElementById('history_list').innerHTML = '您已清空最近浏览过的商品';
+            }
+        </script>  </div>
+
+
+    <div class="AreaR">
+
+
+
+        <div class="box">
+            <div class="box_1">
+                <h3><span>团购商品：</span></h3>
+                <div class="boxCenterList">
+                    <ul class="group clearfix">
+                        <li style="margin-right:8px; text-align:center;">
+                            <a href="group_buy.php?act=view&amp;id=8"><img src="../images/200905/thumb_img/24_thumb_G_1241971981429.jpg" border="0" alt="P806" style="vertical-align: middle"></a>
+                        </li>
+                        <li style="width:555px; line-height:23px;">
+                            团购商品：<a href="group_buy.php?act=view&amp;id=8" class="f5">P806</a><br>
+                            起止时间：2009-05-15 00:00:00 -- 2010-05-26 00:00:00<br>
+                            价格阶梯：<br>
+                            <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+                                <tbody><tr>
+                                    <th width="29%" bgcolor="#FFFFFF">数量</th>
+                                    <th width="71%" bgcolor="#FFFFFF">价格</th>
+                                </tr>
+                                <tr>
+                                    <td width="29%" bgcolor="#FFFFFF">5</td>
+                                    <td width="71%" bgcolor="#FFFFFF">￥1910元</td>
+                                </tr>
+                                <tr>
+                                    <td width="29%" bgcolor="#FFFFFF">10</td>
+                                    <td width="71%" bgcolor="#FFFFFF">￥1860元</td>
+                                </tr>
+                                </tbody></table>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form name="selectPageForm" action="/ws/ecshop/upload/group_buy.php" method="get">
+            <div id="pager" class="pagebar">
+                <span class="f_l f6" style="margin-right:10px;">总计 <b>1</b>  个记录</span>
+
+            </div>
+        </form>
+        <script type="Text/Javascript" language="JavaScript">
+            <!--
+            function selectPage(sel)
+            {
+                sel.form.submit();
+            }
+            //-->
+        </script>
+    </div>
+
+</div>
+</body>
+</html>

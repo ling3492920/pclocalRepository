@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="cn.jhd.ec.dao.admin.AdminActionDao">
+	<select id="findByUserId" resultType="cn.jhd.ec.entity.admin.AdminAction" parameterType="int">
+		select * from ecs_admin_action where action_id in(
+		select action_id from esc_user_action where userid=#{id})
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+

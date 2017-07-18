@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.jhd.ec.dao.admin.AdminUserDao">
+	<resultMap type="cn.jhd.ec.entity.admin.AdminUser"  id="postResultMap">
+		<id column="user_id" property="user_id"/>
+		<result column="user_name" property="user_name"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="add_time" property="add_time"/>
+		<result column="last_login" property="last_login"/>
+		<result column="last_ip" property="last_ip"/>
+		<result column="action_list" property="action_list"/>
+		<result column="nav_list" property="nav_list"/>
+		<result column="lang_type" property="lang_type"/>
+		<result column="agency_id" property="agency_id"/>
+		<result column="suppliers_id" property="suppliers_id"/>
+		<result column="todolist" property="todolist"/>
+		<result column="role_id" property="role_id"/>
+		<collection property="actions" javaType="java.util.ArrayList" ofType="cn.jhd.ec.entity.admin.AdminUserAction"
+			select="cn.jhd.ec.dao.admin.AdminUserActionDao.findFirst"
+			column="user_id">
+		</collection>
+	</resultMap>
+	<select id="findById" resultMap="postResultMap" parameterType="int">
+		SELECT * FROM `ecs_admin_user` WHERE `user_id` = #{id}
+	</select>
+
+	<insert id="save" parameterType="cn.jhd.ec.entity.admin.AdminUser">
+		INSERT INTO `ecs_admin_user` 
+		(`user_name`, `email`, `password`, `add_time`, `last_login`,last_ip,
+		 `action_list`, `nav_list`, `agency_id`,role_id) 
+		 VALUES 
+		 (#{user_name},#{email},#{password},#{add_time},#{last_login},#{last_ip},
+		 #{action_list},#{nav_list},0,#{role_id})
+	</insert>
+	
+	<update id="edit" parameterType="cn.jhd.ec.entity.admin.AdminUser">
+		UPDATE `ecs_admin_user`
+		<set>
+			<if test="user_name!=null">
+				user_name=#{user_name},
+			</if>
+			<if test="email!=null">
+				email=#{email},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="last_login!=null">
+				last_login=#{last_login},
+			</if>
+			<if test="action_list!=null">
+				action_list=#{action_list},
+			</if>
+			<if test="nav_list!=null">
+				nav_list=#{nav_list}
+			</if>	
+			<if test="perssions!=null">
+				perssions=#{perssions}
+			</if>			
+		</set> 
+		WHERE `user_id`=#{user_id}
+	</update>
+	
+	<delete id="delById" parameterType="int">
+		DELETE FROM `ecs_admin_user` WHERE user_id=#{id}
+	</delete>
+	
+	<select id="findAll" resultType="cn.jhd.ec.entity.admin.AdminUser">
+		select * from ecs_admin_user
+	</select>
+	
+	<select id="findByUserName" resultType="cn.jhd.ec.entity.admin.AdminUser" parameterType="string">
+		SELECT * FROM `ecs_admin_user` WHERE `user_name` = #{userName}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
