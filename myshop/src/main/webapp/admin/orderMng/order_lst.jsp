@@ -12,6 +12,10 @@
 <script type="text/javascript" src="${baseurl }admin/js/jquery.min.js"></script>
 <script type="text/javascript" src="${baseurl }admin/js/utils.js"></script>
 <script type="text/javascript" src="${baseurl }admin/js/util.js"></script>
+<style type="text/css">
+        div#tip{ position:absolute; width:auto; height:auto;}
+        .td{padding-left: 5px;padding-right: 5px;}
+</style>
 <script type="text/javascript">
 var path='${baseurl}';
 var order_sn;
@@ -24,6 +28,24 @@ $(function(){
 	loadOrder();
 	//2.初始化分页栏
 	initLimt();
+	//3
+	//div悬停事件e:初次悬停时的光标
+	var id;
+    $('.a').hover(function(e){
+        id=$(this).next().attr("id");
+            //console.log(div);
+            $('#'+id).fadeIn('slow');
+            var left = e.pageX+5;
+            $('#'+id).css({'top' : 30 + 'px','left': left+ 'px' })
+            
+        }
+    );
+    //div的鼠标移除事件
+    $('.a').mouseout(function(){
+        //$('#tip').hide();
+        id=$(this).next().attr("id");
+        $('#'+id).hide();
+    });
 	
 });
 
@@ -103,6 +125,7 @@ function loadOrder(){
 //拼一个tr
 function createTR(ois){
 	var tr='';
+	console.log(ois[0].ogs);
 	for(var i=0;i<ois.length;i++){
 		//<font color="red">无效</font>,未付款,未发货</td>
 		var order_status,pay_status,shipping_status;
@@ -135,9 +158,22 @@ function createTR(ois){
 		}else if(ois[i].shipping_status==4){
 			shipping_status="已发货(部分商品)"
 		}
-		
+		var og=ois[i].ogs;
+		var div='<div id=tip'+i+' style="display:none">'+
+		        '<table width="auto" border="0" cellspacing="1" bgcolor="#dcdcdc">'+
+		        '<thead>'+
+		        '<tr bgcolor="#FFFFFF" ><th>名称</th><th>货号</th><th>价格</th></tr>'+
+		        '</thead>'+
+		        '<tbody>';
+		        
+		for(var j=0;j<og.length;j++){
+			div+= '<tr bgcolor="#FFFFFF" ><td class="td"><img src="#">'+og[j].goods_name+'</td><td>'+og[j].goods_sn+'</td><td>'+og[j].goods_price+'</td></tr>';
+		}
+		div+='</tbody></table></div>';
 		tr+='<tr>'+
-		    '<td valign="top" nowrap="nowrap" style="background-color: rgb(255, 255, 255);"><input type="checkbox" name="checkboxes" value='+ois[i].order_sn+'><a href="order.php?act=info&amp;order_id=27" id="order_0">'+ois[i].order_sn+'</a></td>'+
+		    '<td valign="top" nowrap="nowrap" style="background-color: rgb(255, 255, 255);"><input type="checkbox" name="checkboxes" value='+ois[i].order_sn+'><a class="a" href="order.php?act=info&amp;order_id=27" id="order_0">'+ois[i].order_sn+'</a>'+
+		    div+  
+		    '</td>'+
 		    '<td style="background-color: rgb(255, 255, 255);">'+ois[i].consignee+'<br>06-17 14:33</td>'+
 		    '<td align="left" valign="top" style="background-color: rgb(255, 255, 255);"><a href="mailto: '+ois[i].email+'"> '+ois[i].consignee+'</a> [TEL: '+ois[i].tel+'] <br>'+ois[i].address+'</td>'+
 		    '<td align="right" valign="top" nowrap="nowrap" style="background-color: rgb(255, 255, 255);">￥'+ois[i].order_amount+'元</td>'+
