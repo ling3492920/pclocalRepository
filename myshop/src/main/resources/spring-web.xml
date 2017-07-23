@@ -38,6 +38,9 @@
 		</property>
 	</bean>
 	
+	<!-- 定义统一异常处理器 -->
+	<bean class="cn.jhd.ec.admin.exception.CustomExceptionResolver"></bean>
+	
  	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
  		<property name="prefix" value="/admin/" />
  		<property name="suffix" value=".jsp"/>

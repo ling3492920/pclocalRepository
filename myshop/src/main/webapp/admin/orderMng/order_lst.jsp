@@ -110,12 +110,10 @@ function loadOrder(){
 			}else{
 				alert("没有查到订单！");
 			}
-		}
-		//,
-		//error:function(){
-		//	alert("服务器异常！");
-		//}
-		,
+		},
+		error:function(){
+			alert("服务器异常！");
+		},
 		async:false
 		
 	});

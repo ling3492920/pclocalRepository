@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import cn.jhd.ec.admin.exception.CustomException;
 import cn.jhd.ec.dao.order.OrderInfoDao;
 import cn.jhd.ec.entity.order.CustomOrderInfo;
 import cn.jhd.ec.entity.order.OrderInfo;
@@ -21,7 +22,7 @@ public class AOrderServiceImpl implements AOrderService {
 		return null;
 	}
 
-	public JsonResult findAuto(CustomOrderInfo coi) {
+	public JsonResult findAuto(CustomOrderInfo coi){
 		//1.校验入参
 		//2.执行查询
 		List<OrderInfo> ois = oid.findByAuto(coi);

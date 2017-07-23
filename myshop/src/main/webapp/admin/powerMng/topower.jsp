@@ -50,7 +50,7 @@
     </c:if>
     <c:if test="${pers.goods_del_cellback==null }">
     <input type="checkbox" name="action_code" value="goods_del_cellback" id="remove_back" class="checkbox" >
-    </c:if>
+    </c:if> 
     商品删除/恢复</label>
     </div>
         <div style="width:200px;float:left;">
