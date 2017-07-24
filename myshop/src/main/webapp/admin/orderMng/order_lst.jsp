@@ -12,9 +12,8 @@
 <script type="text/javascript" src="${baseurl }admin/js/jquery.min.js"></script>
 <script type="text/javascript" src="${baseurl }admin/js/utils.js"></script>
 <script type="text/javascript" src="${baseurl }admin/js/util.js"></script>
-<style type="text/css">
-        div#tip{ position:absolute; width:auto; height:auto;}
-        .td{padding-left: 5px;padding-right: 5px;}
+<style type="text/css">   
+        .td{padding-left: 5px;padding-right: 5px;}   
 </style>
 <script type="text/javascript">
 var path='${baseurl}';
@@ -31,23 +30,36 @@ $(function(){
 	//3
 	//div悬停事件e:初次悬停时的光标
 	var id;
-    $('.a').hover(function(e){
+	
+    $('.a').mouseover(function(e){
         id=$(this).next().attr("id");
-            //console.log(div);
             $('#'+id).fadeIn('slow');
             var left = e.pageX+5;
-            $('#'+id).css({'top' : 30 + 'px','left': left+ 'px' })
-            
+            var top = e.pageY+10;
+            //console.log("top:"+top+",left:"+left);
+            sleep(500);
+            //'position':"absolute"让div悬浮于其它元素之上
+            $('#'+id).css({'top' : top+ 'px','left': left+ 'px','position':"absolute", 'width':'auto', 'height':'auto' })   
         }
     );
     //div的鼠标移除事件
     $('.a').mouseout(function(){
         //$('#tip').hide();
+        //$(this).parent().parent().attr("overflow","show");
         id=$(this).next().attr("id");
         $('#'+id).hide();
     });
 	
 });
+function sleep(numberMillis) {  
+    var now = new Date();  
+    var exitTime = now.getTime() + numberMillis;  
+    while (true) {  
+        now = new Date();  
+        if (now.getTime() > exitTime)  
+            return;  
+    }  
+}  
 
 //动态加载订单列表
 function loadOrder(){
@@ -157,7 +169,7 @@ function createTR(ois){
 			shipping_status="已发货(部分商品)"
 		}
 		var og=ois[i].ogs;
-		var div='<div id=tip'+i+' style="display:none">'+
+		var div='<div id=tip'+i+' class="tip" style="display:none">'+
 		        '<table width="auto" border="0" cellspacing="1" bgcolor="#dcdcdc">'+
 		        '<thead>'+
 		        '<tr bgcolor="#FFFFFF" ><th>名称</th><th>货号</th><th>价格</th></tr>'+
@@ -169,8 +181,8 @@ function createTR(ois){
 		}
 		div+='</tbody></table></div>';
 		tr+='<tr>'+
-		    '<td valign="top" nowrap="nowrap" style="background-color: rgb(255, 255, 255);"><input type="checkbox" name="checkboxes" value='+ois[i].order_sn+'><a class="a" href="order.php?act=info&amp;order_id=27" id="order_0">'+ois[i].order_sn+'</a>'+
-		    div+  
+		    '<td valign="top" nowrap="nowrap" style="background-color: rgb(255, 255, 255);"><input type="checkbox" name="checkboxes" value='+ois[i].order_sn+'><a class="a" href="order.php?act=info&amp;order_id=27" id="order_0">'+ois[i].order_sn+'</a>'+ 
+		    div+
 		    '</td>'+
 		    '<td style="background-color: rgb(255, 255, 255);">'+ois[i].consignee+'<br>06-17 14:33</td>'+
 		    '<td align="left" valign="top" style="background-color: rgb(255, 255, 255);"><a href="mailto: '+ois[i].email+'"> '+ois[i].consignee+'</a> [TEL: '+ois[i].tel+'] <br>'+ois[i].address+'</td>'+
@@ -182,6 +194,7 @@ function createTR(ois){
 		     '<a href="javascript:;" onclick="remove('+ois[i].order_id+')">移除</a>'+
 		    '</td>'+
 		  '</tr>';
+		
 	}
 	return tr;
 }
@@ -264,6 +277,7 @@ function sort(sort_by,sort_order){
 </h1>
 <script type="text/javascript" src="${baseurl}admin/js/utils.js"></script>
 <script type="text/javascript" src="${baseurl}admin/js/listtable.js"></script>
+
 <!-- 订单搜索 -->
 <div class="form-div">
   <form action="javascript:searchOrder()" name="searchForm">
