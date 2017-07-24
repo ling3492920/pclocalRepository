@@ -142,7 +142,7 @@ function itroGood(goods){
 	    '<td align="center">'+
 			'<a href="goods/findById.do?id='+goods[i].goods_id+'" target="_blank" title="查看"><img src="'+path+'admin/images/icon_view.gif" width="16" height="16" border="0"></a>'+
 			'<shiro:hasPermission name="goods:add:edit">'+
-			'<a href="${baseurl }agoods/toEdit.do?id='+goods[i].goods_id+'" title="编辑"><img src="'+path+'admin/images/icon_edit.gif" width="16" height="16" border="0"></a>'+
+			'<a href="'+path+'agoods/toEdit.do?id='+goods[i].goods_id+'" title="编辑"><img src="'+path+'admin/images/icon_edit.gif" width="16" height="16" border="0"></a>'+
 	  		'</shiro:hasPermission>'+
 	  		'<shiro:hasPermission name="goods:del:cellback">'+
 			'<a href="javascript:;" onclick="cellBack('+goods[i].goods_id+',this);" title="回收站"><img src="'+path+'admin/images/icon_trash.gif" width="16" height="16" border="0"></a>'+
