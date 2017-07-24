@@ -57,7 +57,7 @@ var volume_price_not_number = "优惠价格不是数字";
 
 <h1>
 <span class="action-span"><a href="${baseurl}admin/templates/goods_list.jsp">商品列表</a></span>
-<span class="action-span1"><a href="#">ECSHOP 管理中心</a> </span><span id="search_id" class="action-span1"> - 编辑商品信息 </span>
+<span class="action-span1"><a href="#">ECSHOP 管理中心</a> </span><span id="search_id" class="action-span1"> - 添加商品信息 </span>
 <div style="clear:both"></div>
 </h1>
 <script type="text/javascript" src="${baseurl}admin/js/utils.js"></script>
